@@ -12,7 +12,12 @@ ORM + 数据库 数据存储
 
 //创建表
 [[DBHelper helper] createTableWithModel:info];
+
 //新增数据
 [[DBHelper helper] insertTableWithModel:info];
+
 //修改数据
 [[DBHelper helper] updateTableWithModel:info];
+
+//查询数据
+[[DBHelper helper] selectFromTableWithModel:info];

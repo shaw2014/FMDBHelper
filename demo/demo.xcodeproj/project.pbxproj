@@ -14,7 +14,6 @@
 		F9CE4FDA1B005BE500D1F014 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9CE4FD91B005BE500D1F014 /* Images.xcassets */; };
 		F9CE4FDD1B005BE500D1F014 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9CE4FDB1B005BE500D1F014 /* LaunchScreen.xib */; };
 		F9CE4FE91B005BE500D1F014 /* demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CE4FE81B005BE500D1F014 /* demoTests.m */; };
-		F9CE50211B005C8200D1F014 /* DBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CE4FF41B005C8200D1F014 /* DBHelper.m */; };
 		F9CE50221B005C8200D1F014 /* MTLFMDBAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CE4FF61B005C8200D1F014 /* MTLFMDBAdapter.m */; };
 		F9CE50231B005C8200D1F014 /* NSObject+Property.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CE4FF81B005C8200D1F014 /* NSObject+Property.m */; };
 		F9CE504E1B005CE100D1F014 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CE504D1B005CE100D1F014 /* libsqlite3.dylib */; };
@@ -45,7 +44,6 @@
 		F9CE4FE71B005BE500D1F014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9CE4FE81B005BE500D1F014 /* demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = demoTests.m; sourceTree = "<group>"; };
 		F9CE4FF31B005C8200D1F014 /* DBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHelper.h; sourceTree = "<group>"; };
-		F9CE4FF41B005C8200D1F014 /* DBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHelper.m; sourceTree = "<group>"; };
 		F9CE4FF51B005C8200D1F014 /* MTLFMDBAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLFMDBAdapter.h; sourceTree = "<group>"; };
 		F9CE4FF61B005C8200D1F014 /* MTLFMDBAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLFMDBAdapter.m; sourceTree = "<group>"; };
 		F9CE4FF71B005C8200D1F014 /* NSObject+Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Property.h"; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 			isa = PBXGroup;
 			children = (
 				F9CE4FF31B005C8200D1F014 /* DBHelper.h */,
-				F9CE4FF41B005C8200D1F014 /* DBHelper.m */,
 				F9CE4FF51B005C8200D1F014 /* MTLFMDBAdapter.h */,
 				F9CE4FF61B005C8200D1F014 /* MTLFMDBAdapter.m */,
 				F9CE4FF71B005C8200D1F014 /* NSObject+Property.h */,
@@ -251,7 +248,6 @@
 				F9CE4FCF1B005BE500D1F014 /* main.m in Sources */,
 				F9CE50221B005C8200D1F014 /* MTLFMDBAdapter.m in Sources */,
 				F9CE50231B005C8200D1F014 /* NSObject+Property.m in Sources */,
-				F9CE50211B005C8200D1F014 /* DBHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

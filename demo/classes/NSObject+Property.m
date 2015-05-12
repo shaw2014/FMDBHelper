@@ -13,13 +13,34 @@
 - (NSArray *)propertyArray
 {
     u_int count;
-    objc_property_t *properties  = class_copyPropertyList([self class], &count);
-    NSMutableArray *propertyArray = [NSMutableArray arrayWithCapacity:count];
+    u_int superCount;
+    objc_property_t *properties = class_copyPropertyList([self class], &count);
+    objc_property_t *superProperties = class_copyPropertyList([self superclass], &superCount);
     
-    for (int i = 0; i < count ; i++)
+    NSMutableArray* propertyArray = [NSMutableArray arrayWithCapacity:count];
+    
+    for (int i = 0; i < count; i++)
     {
         const char* propertyName = property_getName(properties[i]);
-        [propertyArray addObject: [NSString  stringWithUTF8String: propertyName]];
+        BOOL isSame = NO;
+        
+        NSString *propertyStr = [NSString stringWithUTF8String:propertyName];
+        for(int j = 0; j < superCount; j++)
+        {
+            const char* superPropertyName = property_getName(superProperties[j]);
+            
+            NSString *superPropertyStr = [NSString stringWithUTF8String:superPropertyName];
+            if([propertyStr isEqualToString:superPropertyStr])
+            {
+                isSame = YES;
+            }
+        }
+        if(isSame)
+        {
+            continue;
+        }
+        
+        [propertyArray addObject: [NSString stringWithUTF8String:propertyName]];
     }
     
     free(properties);

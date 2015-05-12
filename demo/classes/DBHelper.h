@@ -22,4 +22,6 @@
 
 -(void)deleteTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
+-(id)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
+
 @end

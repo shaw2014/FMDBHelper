@@ -161,4 +161,57 @@ const static NSString* blobTypeString = @"NSDataUIImage";
     }
 }
 
+-(id)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+{
+    NSString *tableName = [model.class FMDBTableName];
+    NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ where 1=1",tableName];
+    if (model)
+    {
+        //遍历所有字段
+        NSArray *columnArray = [model propertyArray];
+        for (NSString *field in columnArray)
+        {
+            id value = [model safetyValueForKey:field];
+            if (value != nil && ![value isEqualToString:[NSString string]]) {
+                [sql appendFormat:@" and %@ = '%@'",field,value];
+            }
+        }
+    }
+    
+    NSLog(@"条件查询sql:%@",sql);
+    
+    return [self query2ObjectArray:model sql:sql];
+}
+
+-(id)query2ObjectArray:(MTLModel<MTLFMDBSerializing> *)model sql:(NSString *)sql
+{
+    FMDatabase *db = [DBHelper database];
+        
+    FMResultSet *rs = [db executeQuery:sql];
+    
+    if (!rs) {
+        [db close];
+        return nil;
+    }
+    
+    NSMutableArray *dataList = [NSMutableArray array];
+    
+    while([rs next])
+    {
+        MTLModel *resultModel = [MTLFMDBAdapter modelOfClass:model.class fromFMResultSet:rs error:nil];
+        [dataList addObject:resultModel];
+    }
+    
+    if(dataList.count > 1)
+    {
+        return dataList;
+    }
+    else
+    {
+        return dataList[0];
+    }
+    
+    return nil;
+}
+
 @end

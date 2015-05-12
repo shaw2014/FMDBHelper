@@ -56,7 +56,7 @@ const static NSString* blobTypeString = @"NSDataUIImage";
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *dbPath = paths[0];
-    dbPath = [dbPath stringByAppendingPathComponent:@"demo.sqlite"];
+    dbPath = [dbPath stringByAppendingPathComponent:@"BidMarket.sqlite"];
     
     NSLog(@"database path is ==============%@",dbPath);
     return dbPath;
@@ -73,7 +73,7 @@ const static NSString* blobTypeString = @"NSDataUIImage";
     return db;
 }
 
--(void)createTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+-(BOOL)createTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
 {
     FMDatabase *db = [DBHelper database];
     
@@ -115,13 +115,15 @@ const static NSString* blobTypeString = @"NSDataUIImage";
         }
         [sql appendString:@")"];
         
-        [db executeUpdate:sql];
-        
         NSLog(@"create table sql is : %@",sql);
+        
+        return [db executeUpdate:sql];
     }
+    
+    return NO;
 }
 
--(void)insertTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+-(BOOL)insertTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
 {
     FMDatabase *db = [DBHelper database];
     
@@ -131,11 +133,13 @@ const static NSString* blobTypeString = @"NSDataUIImage";
         
         NSArray *columnValues = [MTLFMDBAdapter columnValues:model];
         
-        [db executeUpdate:stmt withArgumentsInArray:columnValues];
+        return [db executeUpdate:stmt withArgumentsInArray:columnValues];
     }
+    
+    return NO;
 }
 
--(void)updateTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+-(BOOL)updateTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
 {
     FMDatabase *db = [DBHelper database];
     
@@ -145,11 +149,13 @@ const static NSString* blobTypeString = @"NSDataUIImage";
         
         NSArray *columnValues = [MTLFMDBAdapter columnValues:model];
         
-        [db executeUpdate:stmt withArgumentsInArray:columnValues];
+        return [db executeUpdate:stmt withArgumentsInArray:columnValues];
     }
+    
+    return NO;
 }
 
--(void)deleteTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+-(BOOL)deleteTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
 {
     FMDatabase *db = [DBHelper database];
     
@@ -157,11 +163,13 @@ const static NSString* blobTypeString = @"NSDataUIImage";
     {
         NSString *stmt = [MTLFMDBAdapter deleteStatementForModel:model];
         
-        [db executeUpdate:stmt];
+        return [db executeUpdate:stmt];
     }
+    
+    return NO;
 }
 
--(id)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+-(NSArray *)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
 {
     NSString *tableName = [model.class FMDBTableName];
     NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ where 1=1",tableName];
@@ -183,7 +191,7 @@ const static NSString* blobTypeString = @"NSDataUIImage";
     return [self query2ObjectArray:model sql:sql];
 }
 
--(id)query2ObjectArray:(MTLModel<MTLFMDBSerializing> *)model sql:(NSString *)sql
+-(NSArray *)query2ObjectArray:(MTLModel<MTLFMDBSerializing> *)model sql:(NSString *)sql
 {
     FMDatabase *db = [DBHelper database];
         
@@ -199,19 +207,14 @@ const static NSString* blobTypeString = @"NSDataUIImage";
     while([rs next])
     {
         MTLModel *resultModel = [MTLFMDBAdapter modelOfClass:model.class fromFMResultSet:rs error:nil];
-        [dataList addObject:resultModel];
+        
+        if(resultModel)
+        {
+            [dataList addObject:resultModel];
+        }
     }
     
-    if(dataList.count > 1)
-    {
-        return dataList;
-    }
-    else
-    {
-        return dataList[0];
-    }
-    
-    return nil;
+    return dataList;
 }
 
 @end

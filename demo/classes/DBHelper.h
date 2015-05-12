@@ -14,14 +14,14 @@
 
 +(DBHelper *)helper;
 
--(void)createTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
+-(BOOL)createTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
--(void)insertTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
+-(BOOL)insertTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
--(void)updateTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
+-(BOOL)updateTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
--(void)deleteTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
+-(BOOL)deleteTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
--(id)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
+-(NSArray *)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
 @end

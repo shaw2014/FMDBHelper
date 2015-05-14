@@ -117,7 +117,11 @@ const static NSString* blobTypeString = @"NSDataUIImage";
         
         NSLog(@"create table sql is : %@",sql);
         
-        return [db executeUpdate:sql];
+        BOOL result = [db executeUpdate:sql];
+        
+        [db close];
+        
+        return result;
     }
     
     return NO;
@@ -133,7 +137,11 @@ const static NSString* blobTypeString = @"NSDataUIImage";
         
         NSArray *columnValues = [MTLFMDBAdapter columnValues:model];
         
-        return [db executeUpdate:stmt withArgumentsInArray:columnValues];
+        BOOL result = [db executeUpdate:stmt withArgumentsInArray:columnValues];
+        
+        [db close];
+        
+        return result;
     }
     
     return NO;
@@ -149,7 +157,11 @@ const static NSString* blobTypeString = @"NSDataUIImage";
         
         NSArray *columnValues = [MTLFMDBAdapter columnValues:model];
         
-        return [db executeUpdate:stmt withArgumentsInArray:columnValues];
+        BOOL result = [db executeUpdate:stmt withArgumentsInArray:columnValues];
+        
+        [db close];
+        
+        return result;
     }
     
     return NO;
@@ -163,20 +175,34 @@ const static NSString* blobTypeString = @"NSDataUIImage";
     {
         NSString *stmt = [MTLFMDBAdapter deleteStatementForModel:model];
         
-        return [db executeUpdate:stmt];
+        BOOL result = [db executeUpdate:stmt];
+        
+        [db close];
+        
+        return result;
     }
     
     return NO;
 }
 
+-(NSArray *)selectFromTableWithPrimaryKeyInModel:(MTLModel<MTLFMDBSerializing> *)model
+{
+    return [self selectFromTableWithModel:model columns:[model.class FMDBPrimaryKeys]];
+}
+
 -(NSArray *)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model
+{
+    return [self selectFromTableWithModel:model columns:model.propertyArray];
+}
+
+-(NSArray *)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model columns:(NSArray *)columnArray
 {
     NSString *tableName = [model.class FMDBTableName];
     NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ where 1=1",tableName];
     if (model)
     {
         //遍历所有字段
-        NSArray *columnArray = [model propertyArray];
+//        NSArray *columnArray = [model propertyArray];
         for (NSString *field in columnArray)
         {
             id value = [model safetyValueForKey:field];
@@ -213,6 +239,8 @@ const static NSString* blobTypeString = @"NSDataUIImage";
             [dataList addObject:resultModel];
         }
     }
+    
+    [db close];
     
     return dataList;
 }

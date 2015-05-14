@@ -24,4 +24,6 @@
 
 -(NSArray *)selectFromTableWithModel:(MTLModel<MTLFMDBSerializing> *)model;
 
+-(NSArray *)selectFromTableWithPrimaryKeyInModel:(MTLModel<MTLFMDBSerializing> *)model;
+
 @end
